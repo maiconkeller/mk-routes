@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 
-import ExampleComponent from 'mk-routes'
+import MkRoutes from 'mk-routes'
+import { routes } from './RoutesUtils'
+import { isLogged } from './SecurityUtils'
 
 export default class App extends Component {
   render () {
-    return (
-      <div>
-        <ExampleComponent text='Modern React component module' />
-      </div>
-    )
+    return <MkRoutes routes={routes} isLogged={isLogged} />
   }
 }
