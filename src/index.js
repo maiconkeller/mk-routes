@@ -1,22 +1,37 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import styles from './styles.css'
+import { BrowserRouter } from 'react-router-dom'
 
-export default class ExampleComponent extends Component {
+import AnonymousRoute from './AnonymousRoute'
+import ProtectedRoute from './ProtectedRoute'
+
+class MkRoutes extends Component {
   static propTypes = {
-    text: PropTypes.string
+    routes: PropTypes.array,
+    isLogged: PropTypes.bool
   }
 
   render() {
-    const {
-      text
-    } = this.props
-
+    const { routes, isLogged } = this.props
     return (
-      <div className={styles.test}>
-        Example Component: {text}
+      <div>
+        <BrowserRouter>
+          <Fragment>
+            {
+              !!routes && routes.map(route => {
+                if (route.type === 'protected') {
+                  return <ProtectedRoute key={route.path} mode={route.mode} exact={route.exact} path={route.path} baseComponent={route.baseComponent} component={route.component} isLogged={isLogged} />
+                } else {
+                  return <AnonymousRoute key={route.path} mode={route.mode} exact={route.exact} path={route.path} component={route.component} isLogged={isLogged} />
+                }
+              })
+            }
+          </Fragment>
+        </BrowserRouter>
       </div>
     )
   }
 }
+
+export default MkRoutes
