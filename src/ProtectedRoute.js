@@ -1,22 +1,25 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
-const ProtectedRoute = ({ baseComponent: Base, component: Component, mode, isLogged, ...rest }) =>
+const ProtectedRoute = ({ componentBase: Base, component: Component, mode, isLogged, redirectAnonymousPath, ...rest }) =>
   <Route {...rest} render={
     props => {
       if (isLogged()) {
         // Passing on props gives the child component the DOM push api access.
         // To redirect pages, use this.props.history.push("/path") inside the child.
         // Elsewhere (without these props), just user <Redirect to="/path" />.
-        return (
-          <Base history={props.history}>
-            <Component mode={mode} {...props} />
-          </Base>
-        )
+        if (Base) {
+          return (
+            <Base history={props.history}>
+              <Component {...props} mode={mode} />
+            </Base>
+          )
+        }
+        return <Component {...props} mode={mode} />
       }
       return (
         <Redirect to={{
-          pathname: '/auth/signin',
+          pathname: redirectAnonymousPath || '/auth/signin',
           state: { from: props.location }
         }} />
       )

@@ -9,11 +9,19 @@ import ProtectedRoute from './ProtectedRoute'
 class MkRoutes extends Component {
   static propTypes = {
     routes: PropTypes.array,
-    isLogged: PropTypes.bool
+    isLogged: PropTypes.bool,
+    anonymousBase: PropTypes.element,
+    protectedBase: PropTypes.element
   }
 
   render() {
-    const { routes, isLogged } = this.props
+    const {
+      routes,
+      anonymousBase,
+      protectedBase,
+      isLogged
+    } = this.props
+
     return (
       <div>
         <BrowserRouter>
@@ -21,9 +29,27 @@ class MkRoutes extends Component {
             {
               !!routes && routes.map(route => {
                 if (route.type === 'protected') {
-                  return <ProtectedRoute key={route.path} mode={route.mode} exact={route.exact} path={route.path} baseComponent={route.baseComponent} component={route.component} isLogged={isLogged} />
+                  return (
+                    <ProtectedRoute
+                      key={route.path}
+                      mode={route.mode}
+                      exact={route.exact}
+                      path={route.path}
+                      component={route.component}
+                      componentBase={protectedBase || route.protectedBase}
+                      isLogged={isLogged} />
+                  )
                 } else {
-                  return <AnonymousRoute key={route.path} mode={route.mode} exact={route.exact} path={route.path} component={route.component} isLogged={isLogged} />
+                  return (
+                    <AnonymousRoute
+                      key={route.path}
+                      mode={route.mode}
+                      exact={route.exact}
+                      path={route.path}
+                      component={route.component}
+                      componentBase={anonymousBase || route.anonymousBase}
+                      isLogged={isLogged} />
+                  )
                 }
               })
             }
