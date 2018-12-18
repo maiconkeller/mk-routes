@@ -8,22 +8,26 @@ import ProtectedRoute from './ProtectedRoute'
 
 class MkRoutes extends Component {
   static propTypes = {
-    routes: PropTypes.array,
-    isLogged: PropTypes.bool,
+    routes: PropTypes.array.isRequired,
+    isLogged: PropTypes.func.isRequired,
     anonymousBase: PropTypes.element,
-    protectedBase: PropTypes.element
+    protectedBase: PropTypes.element,
+    toAnonymousPath: PropTypes.string,
+    toProtectedPath: PropTypes.string
   }
 
   render() {
     const {
       routes,
       anonymousBase,
+      toAnonymousPath,
       protectedBase,
+      toProtectedPath,
       isLogged
     } = this.props
 
     return (
-      <div>
+      <Fragment>
         <BrowserRouter>
           <Fragment>
             {
@@ -35,8 +39,9 @@ class MkRoutes extends Component {
                       mode={route.mode}
                       exact={route.exact}
                       path={route.path}
+                      redirectPath={route.redirectPath || toAnonymousPath || null}
                       component={route.component}
-                      componentBase={protectedBase || route.protectedBase}
+                      componentBase={route.componentBase || protectedBase || null}
                       isLogged={isLogged} />
                   )
                 } else {
@@ -46,8 +51,9 @@ class MkRoutes extends Component {
                       mode={route.mode}
                       exact={route.exact}
                       path={route.path}
+                      redirectPath={route.redirectPath || toProtectedPath || null}
                       component={route.component}
-                      componentBase={anonymousBase || route.anonymousBase}
+                      componentBase={route.componentBase || anonymousBase || null}
                       isLogged={isLogged} />
                   )
                 }
@@ -55,7 +61,7 @@ class MkRoutes extends Component {
             }
           </Fragment>
         </BrowserRouter>
-      </div>
+      </Fragment>
     )
   }
 }
