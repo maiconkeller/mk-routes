@@ -9,6 +9,10 @@
 ```bash
 npm install --save mk-routes
 ```
+or
+```bash
+yarn add mk-routes
+```
 
 ## Usage
 
@@ -42,15 +46,15 @@ import UserFormContainer from '../users/UserContainerForm';
 import Base from './Base' // component base (menu, sidebar, content)
 
 export const routes = [
-  { type: 'protected', mode: "view", exact: true, path: "/", component: HomeContainer, baseComponent: Base },
-  
+  { type: 'protected', mode: "view", exact: true, path: "/", component: HomeContainer, componentBase: Base },
+
   { type: 'anonymous', mode: "auth", exact: true, path: "/auth/signin", component: LoginContainer },
   { type: 'anonymous', mode: "auth", exact: true, path: "/auth/forgot", component: ForgotContainer },
   { type: 'anonymous', mode: "auth", exact: true, path: "/auth/reset", component: ResetContainer },
-  
-  { type: 'protected', mode: "view", exact: true, path: "/user", component: UserContainer, baseComponent: Base },
-  { type: 'protected', mode: "edit", exact: true, path: "/user/:id/edit", component: UserFormContainer , baseComponent: Base },
-  { type: 'protected', mode: "new" , exact: true, path: "/user/new", component: UserFormContaine, baseComponent: Baser }
+
+  { type: 'protected', mode: "view", exact: true, path: "/user", component: UserContainer, componentBase: Base },
+  { type: 'protected', mode: "edit", exact: true, path: "/user/:id/edit", component: UserFormContainer , componentBase: Base },
+  { type: 'protected', mode: "new" , exact: true, path: "/user/new", component: UserFormContaine, componentBase: Baser }
 ]
 ```
 
