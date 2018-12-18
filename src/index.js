@@ -31,11 +31,11 @@ class MkRoutes extends Component {
         <BrowserRouter>
           <Fragment>
             {
-              !!routes && routes.map(route => {
+              !!routes && routes.map((route, index) => {
                 if (route.type === 'protected') {
                   return (
                     <ProtectedRoute
-                      key={route.path}
+                      key={`mkroutes-${index}`}
                       mode={route.mode}
                       exact={route.exact}
                       path={route.path}
@@ -47,7 +47,7 @@ class MkRoutes extends Component {
                 } else {
                   return (
                     <AnonymousRoute
-                      key={route.path}
+                      key={`mkroutes-${index}`}
                       mode={route.mode}
                       exact={route.exact}
                       path={route.path}
