@@ -10,10 +10,12 @@ class MkRoutes extends Component {
   static propTypes = {
     routes: PropTypes.array.isRequired,
     isLogged: PropTypes.func.isRequired,
+    hasAuthorization: PropTypes.func.isRequired,
     anonymousBase: PropTypes.element,
     protectedBase: PropTypes.element,
     toAnonymousPath: PropTypes.string,
-    toProtectedPath: PropTypes.string
+    toProtectedPath: PropTypes.string,
+    permission: PropTypes.string
   }
 
   render() {
@@ -23,7 +25,8 @@ class MkRoutes extends Component {
       toAnonymousPath,
       protectedBase,
       toProtectedPath,
-      isLogged
+      isLogged,
+      hasAuthorization
     } = this.props
 
     return (
@@ -40,9 +43,12 @@ class MkRoutes extends Component {
                       exact={route.exact}
                       path={route.path}
                       redirectPath={route.redirectPath || toAnonymousPath || null}
+                      permissionRedirectPath={route.permissionRedirectPath || null}
                       component={route.component}
                       componentBase={route.componentBase || protectedBase || null}
-                      isLogged={isLogged} />
+                      isLogged={isLogged}
+                      hasAuthorization={hasAuthorization}
+                      permission={route.permission} />
                   )
                 } else {
                   return (

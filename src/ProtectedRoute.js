@@ -9,7 +9,7 @@ const ProtectedRoute = ({ componentBase: Base, component: Component, mode, permi
         if (!hasAuthorization(permission)) {
             return (
                 <Redirect to={{
-                    pathname: !!permissionRedirectPath ? permissionRedirectPath : "/",
+                    pathname: permissionRedirectPath != null ? permissionRedirectPath : "/",
                     state: { from: props.location }
                 }} />
             );
@@ -29,7 +29,7 @@ const ProtectedRoute = ({ componentBase: Base, component: Component, mode, permi
       }
       return (
         <Redirect to={{
-          pathname: !!redirectPath ? redirectPath : '/auth/signin',
+          pathname: redirectPath != null ? redirectPath : '/auth/signin',
           state: { from: props.location }
         }} />
       )
